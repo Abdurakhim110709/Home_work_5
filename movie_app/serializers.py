@@ -12,7 +12,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'description', 'duration', 'director_name']  # Убираем "director", добавляем "director_name"
+        fields = ['id', 'title', 'description', 'duration', 'director_name']
 
     def get_director_name(self, obj):
         return obj.director.name if obj.director else None
