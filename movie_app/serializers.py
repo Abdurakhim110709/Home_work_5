@@ -5,22 +5,22 @@ from .models import Director, Movie, Review
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ['text', 'stars', 'movie']
+        fields = '__all__'
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
     average_rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'description', 'duration', 'reviews', 'average_rating']
+        fields = ['id', 'title', 'description', 'duration', 'director', 'reviews', 'average_rating']
 
     def get_average_rating(self, obj):
         reviews = obj.reviews.all()
-        if reviews:
-            return sum([review.stars for review in reviews]) / len(reviews)
-        return 1
+        if reviews.exists():
+            return sum(review.stars for review in reviews) / reviews.count()
+        return None
 
 
 class DirectorSerializer(serializers.ModelSerializer):
