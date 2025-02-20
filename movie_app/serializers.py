@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Director, Movie, Review
 
-
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
@@ -16,7 +15,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         if not (1 <= value <= 5):
             raise serializers.ValidationError("Оценка должна быть от 1 до 5.")
         return value
-
 
 class MovieSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
@@ -41,7 +39,6 @@ class MovieSerializer(serializers.ModelSerializer):
         if value <= 0:
             raise serializers.ValidationError("Продолжительность фильма должна быть больше 0 минут.")
         return value
-
 
 class DirectorSerializer(serializers.ModelSerializer):
     movies_count = serializers.IntegerField(read_only=True)

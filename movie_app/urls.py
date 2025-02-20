@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import DirectorListView, DirectorDetailView, MovieListView, MovieDetailView, ReviewListView, ReviewDetailView
+from .views import (
+    DirectorListView, DirectorDetailView,
+    MovieListView, MovieDetailView,
+    ReviewListView, ReviewDetailView
+)
 
 urlpatterns = [
     path('api/v1/directors/', DirectorListView.as_view(), name='director-list'),
